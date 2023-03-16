@@ -7349,8 +7349,18 @@ class ESLint {
 		const extensionsArg = extensions.map((ext) => `.${ext}`).join(",");
 		const fixArg = fix ? "--fix" : "";
 		const commandPrefix = prefix || getNpmBinCommand(dir);
+
+		const command = `${commandPrefix} eslint --ext ${extensionsArg} ${fixArg} --no-color --format json ${args || "."}`
+
+		run(
+			`echo "${command}"`, {
+				dir,
+				ignoreErrors: true
+			}
+		)
+
 		return run(
-			`${commandPrefix} eslint --ext ${extensionsArg} ${fixArg} --no-color --format json ${args} "."`,
+			command,
 			{
 				dir,
 				ignoreErrors: true,
